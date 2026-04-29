@@ -1,0 +1,30 @@
+```cs
+public class Item
+{
+	name,
+	desc
+}
+```
+
+```
+public ActionResult Create(List<Item> selectedCoursed)
+{
+}
+
+```
+
+
+Wrong
+```
+selectedCoursed[0][name]=AAA&&selectedCoursed[0][desc]=DescA
+&& selectedCoursed[1][name]=BBB&&selectedCoursed[1][desc]=DescB
+
+```
+
+
+Correct
+```
+selectedCoursed[0].name=AAA&&selectedCoursed[0].desc=DescA
+&& selectedCoursed[1].name=BBB&&selectedCoursed[1].desc=DescB
+
+```
