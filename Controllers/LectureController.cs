@@ -125,5 +125,30 @@ namespace EmployeeAPI_MVC.Controllers
 
 
 
+        // Edit 頁面
+        // 跟 Create 頁面很像
+        // Model  課程名稱，課程評價，課程描述
+
+
+
+        public ActionResult ActionName()
+        {
+
+            return View();
+        }
+
+
+
+
+
+
+
+
+
+
+
+        // Delete 頁面
+
+
     }
 }
