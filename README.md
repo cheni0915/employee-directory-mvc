@@ -1,9 +1,9 @@
-# EmployeeAPI_MVC
+# course-directory-mvc
 
-這是一個使用 ASP.NET Core MVC / .NET 8 練習的員工管理專案。
+這是一個使用 ASP.NET Core MVC / .NET 8 練習的課程管理專案。
 
 ## 功能
-- 員工資料新增、查詢、修改、刪除
+- 課程資料新增、查詢、修改、刪除
 - MVC 架構練習
 - 串接資料庫
 
