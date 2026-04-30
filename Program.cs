@@ -10,6 +10,8 @@ builder.Services.AddControllersWithViews();
 
 // 註冊自訂屬性
 builder.Services.AddScoped<判斷是否有重複的課程名稱Attribute>();
+builder.Services.AddScoped<判斷自己以外是否有重複的課程名稱Attribute>();
+
 
 // 注冊 EF ContosoUniversityContext
 builder.Services.AddDbContext<ContosoUniversityContext>(

@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using X.PagedList.Extensions;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace EmployeeAPI_MVC.Controllers
 {
@@ -126,21 +127,74 @@ namespace EmployeeAPI_MVC.Controllers
 
 
         // Edit 頁面
+        // GET: Lecture/Edit/5
         // 跟 Create 頁面很像
-        // Model  課程名稱，課程評價，課程描述
+        // Model  課程名稱，課程評價
+        // 用id  get 點選的課程資料； post 更新資料
 
 
 
-        public ActionResult ActionName()
+        [HttpGet]
+        public ActionResult Edit(int id)
         {
+            // 找到符合 id 的資料
 
-            return View();
+            var item = db.Courses.FirstOrDefault(p => p.CourseId == id);
+
+            if (item == null)
+            {
+                return NotFound();
+            }
+
+            // 把資料轉成可以放入 CourseEdit
+
+            var info = new CourseEdit
+            {
+                CourseId = item.CourseId,
+                Title = item.Title,
+                Credits = item.Credits
+            };
+
+            // View 要型別一致，轉為 CourseEdit 才能成功
+            return View(info);
+
         }
 
 
 
+        [HttpPost]
+        public ActionResult Edit(CourseEdit data)
+        {
+            // 判斷修改後的資料是否有效
+            // 有效寫入資料庫
+            if (ModelState.IsValid)
+            {
+
+                // 找到符合 id 的資料
+                var item = db.Courses.FirstOrDefault(p => p.CourseId == data.CourseId);
 
 
+                if (item == null)
+                {
+                    return NotFound();
+                }
+
+
+                // 修改資料
+                item.Title = data.Title;
+                item.Credits = data.Credits;
+
+                db.SaveChanges();
+
+
+                return RedirectToAction("Index");
+            }
+
+            // 轉失敗 CourseEdit data 會傳到 View
+            // View 開頭要轉型別讓其一致，轉為 CourseEdit 才能成功
+
+            return View(data);
+        }
 
 
 
