@@ -1,4 +1,5 @@
-﻿using EmployeeAPI_MVC.Models;
+﻿using System.Reflection;
+using EmployeeAPI_MVC.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using X.PagedList.Extensions;
@@ -202,7 +203,60 @@ namespace EmployeeAPI_MVC.Controllers
 
 
         // Delete 頁面
+        // http:/.../Delete/2
+        // Get  取得資料
+        // Post 刪除確認
 
+
+
+        [HttpGet]
+        public ActionResult Delete(int id)
+        {
+            // 用 id 找到資料呈現
+
+            var course = db.Courses.FirstOrDefault(c => c.CourseId == id);
+
+
+            if ( course == null )
+            {
+                return NotFound();
+            }
+
+            return View(course);
+        }
+
+
+
+        [HttpPost, ActionName("Delete")]
+        [ValidateAntiForgeryToken]
+
+
+        // ASP.NET MVC 處理 Delete 的標準寫法通常是：GET 叫 Delete 用來顯示確認頁，
+        // POST 方法改名成 DeleteConfirmed，再用 [ActionName("Delete")] 讓路由仍然走 /Delete/{id}。
+
+        // 改資料的 Action 會加 [ValidateAntiForgeryToken] 驗證 => 後端檢查防偽碼
+        // 並且 View 的 form 要加 @Html.AntiForgeryToken() => 前端表單放入防偽碼
+
+        public ActionResult DeleteConfirmed(int id)
+        {
+
+            // 刪除也是用 id 判斷
+
+            var course = db.Courses.FirstOrDefault(c => c.CourseId == id);
+
+            if (course == null)
+            {
+                return NotFound();
+            }
+
+            // 刪除功能確認 ID 即可執行，不用在 ModelState.IsValid
+
+            db.Courses.Remove( course );
+            db.SaveChanges();
+
+            return RedirectToAction("Index");
+
+        }
 
     }
 }
